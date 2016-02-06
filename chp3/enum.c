@@ -7,14 +7,12 @@ int main(void){
 	also, u can specify the value of each enum, e.g.
 	enum coni {penny=1,nickel=3};
 	 */
-	
-	const int i;
-	printf("%d\n",i );
+	}
 
 	enum coin one,two,three;
 	one =penny;
 	two=dime;
 	three=dollar;
-	printf("one= %d two= %d  three= %d\n",one,two,three);
+	printf("one=%s two=%s  three=%s\n",one,two,three);
 	return 1;
 }
