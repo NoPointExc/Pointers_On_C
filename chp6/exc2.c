@@ -7,35 +7,33 @@
 int delSubstr(char *str, char const *substr);
 
 void main(void){
-	char *str="abcdefgh";
+	char str[]="abcdefgh";
 	char const *substr="def";
 	int ans=delSubstr(str,substr);
-	//printf("%s   %i\n",str,ans );
+	printf("%s   %i\n",str,ans );
 }
 
 
-int delSubstr(char *str, char const *substr){
-	
-	char *p=malloc(sizeof(char*));
+int delSubstr(char *str, char const *substr){	
+	char *p,*iStr;
+	char const *iSub;
 	
 	for(p=str;*p!='\0';p++){	
 		//printf("%s\n", p);
-		char const *iSub;
-		char *iStr;
+	
 		for(iSub=substr,iStr=p;*iSub==*iStr && *iSub!='\0';iSub++,iStr++);
 		if(*iSub=='\0'){
 			//replace and return 1
 			iSub=substr;
 			while(*iSub!='\0' && *iStr!='\0'){
-				//*p=*iStr;
-				printf("%s",p);
+				*p=*iStr;
+				//printf("%i",sizeof(p));
 				p++;
 				iStr++;
 			}
-			free(p);
+			*p='\0';
 			return TRUE;
 		}	
 	}
-	free(p);
 	return FALSE;
 }
