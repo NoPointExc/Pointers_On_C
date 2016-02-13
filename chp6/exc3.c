@@ -3,19 +3,20 @@
 void reverseStr(char *string);
 
 void main(void){
-	char *str="abcdefgh";
+	char str[]="abcdefgh";
 	reverseStr(str);
-
+	printf("%s\n",str);
 }
 
 
-void reverseStr(char *string){
-	char *head=string, *tail=string;
-	while(*tail++!='\0');
-	char *newHead=tail;
-	while(head++!=newHead){
-		*tail=(char)*head;
-		tail++;		
-	}	
-	string=newHead;
+void reverseStr(char *str){
+	char *head=str,*tail=str;
+	while(*(tail+1)!='\0') tail++;
+	while(head<tail){
+		*tail^=*head;
+		*head^=*tail;
+		*tail^=*head;
+		head++;
+		tail--;
+	}
 }
