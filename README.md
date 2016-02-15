@@ -1,2 +1,2 @@
-Examples & Excerise of "Pointers on C".
+ "Pointers on C". answers of programming excerise
 ---------------------------------------
