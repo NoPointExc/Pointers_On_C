@@ -14,6 +14,7 @@ void main(void){
 		{0,0,0,1,0},
 		{0,0,0,0,1}
 	};
+	
 	int ans=get(*matr,0,0);
 	printf("%i\n",ans);
 }
