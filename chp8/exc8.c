@@ -10,7 +10,6 @@ void print_map(int *map);
 
 void main(void){
 	int map[8][8]={0};
-	//print_map(*map);
 	eight_queens(*map,0);
 }
 

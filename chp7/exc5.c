@@ -43,6 +43,7 @@ void print(char *formate, ...){
 			}
 		}
 	}
-	printf("%s\n",buff);	
+	printf("%s\n",buff);
+	va_end(vaList);	
 }
 
