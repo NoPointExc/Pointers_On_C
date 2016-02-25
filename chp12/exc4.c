@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdlib.h>
 
 #include "list.h"
 
@@ -7,7 +6,14 @@
 Node * sll_reverse(Node *first);
 
 void main(void){
+	int arr[]={1,2,3,4,5,6,7,8,9};
+	Node *list=create_list(arr,sizeof(arr)/sizeof(int));
+	char *str=to_str(list);
+	printf("%s\n",str);
+	
 
+	free(list);
+	free(str);
 }
 
 /**

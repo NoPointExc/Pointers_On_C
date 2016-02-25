@@ -1,10 +1,22 @@
+#include <stdlib.h>
+#include <stdio.h>
+
+
+#define TO_CHAR '0'-0
+#define NUL '\0'
+
 typedef struct NODE{
 	struct NODE *next;
 	int val;	
 } Node;
 
 
-
+/**
+ * creat a list with given int array
+ * @param  vals :points to the first int in the array
+ * @param  size :the size of the array
+ * @return      pointer points to the head of created linked list 
+ */
 Node* create_list(int *vals, int size){
 	Node *list=(Node*)malloc(size*sizeof(Node));
 	if(list==NULL || vals==NULL) return NULL;
@@ -24,5 +36,32 @@ Node* create_list(int *vals, int size){
 	}
 	
 	return head;
+}
+
+/**
+ * display the list in a string
+ * @param  root :pointed to the first list node  
+ * @return      a list in string
+ * @warnning  only number 0~9 is considerd
+ */
+char* to_str(Node* root){
+	int len=sizeof(root);
+	printf("root=%d\n",sizeof(root) );
+	printf("Node=%s\n",sizeof(Node));  //segment fault here
+	char *str=malloc(3*len*sizeof(char)+1);
+	char *it=str;
+
+	/**
+	 * travel all nodes, from head to tail, add every node to str
+	 */
+	while(root!=NULL){
+		it[0]=(char)(root->val + TO_CHAR);
+		it[1]='-';
+		it[2]='>';
+		it+=3;
+		root=root->next;
+	}
+	it=NUL;
+	return str;
 }
 
