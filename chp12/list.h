@@ -1,7 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-
 #define TO_CHAR '0'-0
 #define NUL '\0'
 
@@ -9,7 +8,6 @@ typedef struct NODE{
 	struct NODE *next;
 	int val;	
 } Node;
-
 
 /**
  * creat a list with given int array
@@ -23,14 +21,8 @@ Node* create_list(int *vals, int size){
 	Node *head=list;	
 	int i;	
 	for(i=0;i<size;i++){
-		/**
-		 * point to next node
-		 */
 		if(i<size-1) list->next=&head[i+1];		
 		else list->next=NULL;
-		/**
-		 * assign val
-		 */
 		list->val=vals[i];
 		list=list->next;
 	}
@@ -47,10 +39,6 @@ Node* create_list(int *vals, int size){
 char* to_str(Node* root,int len){
 	char *str=malloc(3*len*sizeof(char)+1);
 	char *it=str;
-
-	/**
-	 * travel all nodes, from head to tail, add every node to str
-	 */
 	while(root!=NULL){
 		it[0]=(char)(root->val + TO_CHAR);
 		it[1]='-';
@@ -61,4 +49,3 @@ char* to_str(Node* root,int len){
 	it[-2]=NUL;
 	return str;
 }
-
