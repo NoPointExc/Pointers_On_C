@@ -11,13 +11,15 @@ void main(void){
 	Node *list=create_list(arr,len);
 	char *str=to_str(list,len);
 	printf("%s\n",str);
-	
-	//sll_reverse(list);
-	str=to_str(list,len);
-	printf("%s\n",str);
-
+	free(str);	
 	free(list);
-	free(str);
+
+	Node *rev_list=sll_reverse(list);
+	// str=to_str(rev_list,len);
+	// printf("%s\n",str);
+	// free(str);
+	free(rev_list);
+
 }
 
 /**
@@ -25,23 +27,27 @@ void main(void){
  * @param  first :the first node of the input list
  * @return       the new head leading the list
  */
-Node * sll_reverse(Node *first){
+Node *sll_reverse(Node *first){
 	if(first==NULL) return NULL;
 	
 	/**
 	 * travel to the end of the list, get the tail and assigned it to the new_head
 	 */	
-	Node *new_head=first;
-	Node *frd, *bck;
-	while(new_head->next!=NULL) new_head=new_head->next;
+	Node *fwd, *mid,*bck;
 	
-	/**
-	 * frd travel from first node to the new head (end), move all nodes from frond to back
-	 */
-	for(frd=first,bck=new_head;frd!=new_head;frd=frd->next){
-		bck->next=frd;
-		bck=bck->next;
-		bck->next=NULL;
+	fwd=first;
+	mid=fwd->next;
+	bck=mid->next;
+	fwd->next=NULL;	
+	while(bck!=NULL){
+		//printf("%d %d %d, ",fwd->val,mid->val,bck->val );		
+		mid->next=fwd;
+		fwd=mid;
+		mid=bck;
+		bck=bck->next;		
 	}
-	return new_head;
+	mid->next=fwd;
+	printf("%d %d %d \n",mid->val,mid->next->val, mid->next->next->val);
+
+	return mid;
 }

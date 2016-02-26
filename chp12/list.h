@@ -45,7 +45,6 @@ Node* create_list(int *vals, int size){
  * @warnning  only number 0~9 is considerd
  */
 char* to_str(Node* root,int len){
-	
 	char *str=malloc(3*len*sizeof(char)+1);
 	char *it=str;
 
@@ -59,7 +58,7 @@ char* to_str(Node* root,int len){
 		it+=3;
 		root=root->next;
 	}
-	it=NUL;
+	it[-2]=NUL;
 	return str;
 }
 
