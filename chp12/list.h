@@ -44,10 +44,8 @@ Node* create_list(int *vals, int size){
  * @return      a list in string
  * @warnning  only number 0~9 is considerd
  */
-char* to_str(Node* root){
-	int len=sizeof(root);
-	printf("root=%d\n",sizeof(root) );
-	printf("Node=%s\n",sizeof(Node));  //segment fault here
+char* to_str(Node* root,int len){
+	
 	char *str=malloc(3*len*sizeof(char)+1);
 	char *it=str;
 

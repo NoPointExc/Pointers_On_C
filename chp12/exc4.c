@@ -7,10 +7,14 @@ Node * sll_reverse(Node *first);
 
 void main(void){
 	int arr[]={1,2,3,4,5,6,7,8,9};
-	Node *list=create_list(arr,sizeof(arr)/sizeof(int));
-	char *str=to_str(list);
+	int len=sizeof(arr)/sizeof(int);
+	Node *list=create_list(arr,len);
+	char *str=to_str(list,len);
 	printf("%s\n",str);
 	
+	//sll_reverse(list);
+	str=to_str(list,len);
+	printf("%s\n",str);
 
 	free(list);
 	free(str);
