@@ -38,6 +38,10 @@ Node* create_list(int *vals, int size){
  */
 char* to_str(Node* root,int len){
 	char *str=malloc(3*len*sizeof(char)+1);
+	if(root==NULL) {
+		str[0]=NUL;
+		return str;
+	};
 	char *it=str;
 	while(root!=NULL){
 		it[0]=(char)(root->val + TO_CHAR);
