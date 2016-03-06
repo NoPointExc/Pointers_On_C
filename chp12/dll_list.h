@@ -1,8 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-
-#define NUL '\0'
-
 typedef struct DLL_NODE{
 	int val;
 	struct DLL_NODE *bwd;	
@@ -12,3 +7,5 @@ typedef struct DLL_NODE{
 
 Node *create_list(int *vals,int len);
 char *to_str(Node *list, int size);
+int dll_remove(Node *rootp, Node *node);
+

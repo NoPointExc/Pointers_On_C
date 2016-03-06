@@ -26,6 +26,7 @@ Node* create_list(int *vals, int size){
 		list->val=vals[i];
 		list=list->next;
 	}
+	
 	return head;
 }
 
