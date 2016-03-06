@@ -1,2 +1,3 @@
- "Pointers on C". answers of programming excerise
+ "Pointers on C". Programming Excerises
 ---------------------------------------
+
