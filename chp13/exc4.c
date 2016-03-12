@@ -1,50 +1,68 @@
 #include <stdio.h>
 
-int compare(void const *p0, void const *p1);
-void sort(void *head[], int len, int size, int (*comp)(void const*p0, void const *p1) );
-void _sort(void *head[], int left, int right, int (*comp)(void const*p0, void const *p1) );
-void swap(void *p0, void *p1);
-void print(void const *head[],int len);
+void sort(void *head[],int size, int (*comp)(char *p0, char  *p1) );
+void quick_sort(void *head[], int left, int right, int (*comp)(char *p0, char *p1) );
+void swap(char *p0, char *p1);
+//for debug and test
+int compare(char  *p0, char  *p1);
+void print(char const *head[],int len);
 
-/*
-* the value of argc(memory-address) is not continue, so never use argv or pass *argv instand of argv
-**/
 int main(int argc, char const *argv[])
 {	
-	int i;
-	print( (void *)argv,argc);
-	swap((void *)argv[2],(void *)argv[3]);
-	print( (void *)argv,argc);
+	//printf("a");
+	//print( argv,argc);
+	printf("%d\n", argv);
+	sort((void *)argv,argc-1,compare);
+	printf("%d\n", argv);
 	return 0;
 }
 
-//quick sort
-void sort(void *head[], int len, int size, int (*comp)(void const*p0, void const *p1))
-{
-
+void sort(void *head[],int size, int (*comp)(char *p0, char  *p1) ){
+	quick_sort(head,0,size,comp );
 }
 
-void _sort(void *head[], int left, int right, int (*comp)(void const*p0, void const *p1) ){
+void quick_sort(void *head[], int left, int right, int (*comp)(char *p0, char *p1) ){
+	int i=left+1,t=right;
 	if(left >=right) return;
+
+	while(i<=t){
+		//if [i] > [left]
+		if( comp(head[i],head[left])>0 ){
+			swap(head[i],head[t]);
+			t--;
+		}else{
+			i++;
+		}
+	}	
+
+	quick_sort(head,left,i-1,comp);
+	quick_sort(head,i,right,comp);
 }
 
 
-int compare(void const *p0, void const *p1)
+void swap(char *p0, char *p1)
+{
+	*p0^=*p1;
+	*p1^=*p0;
+	*p0^=*p1;
+}
+
+/**
+ * if p0>p1
+ * @param  p0 
+ * @param  p1 
+ * @return    p0>p1, return 1, else reutn0. NULL pointer, return -1
+ */
+int compare(char *p0, char *p1)
 {
 	if(p0==NULL || p1==NULL) return -1;
-	int val0= *((int *)p0);
-	int val1= *((int *)p1);
-	return val0>val1;
+	return *p0>*p1;
 }
 
-void swap(void *p0, void *p1)
-{
-	//printf("%d\n",(int)*p0);
-}
 
-void print(void const *head[], int const len)
+void print(char const *head[], int len)
 {
 	int i;
-	for(i=1;i<len;i++) printf("%d , ", ((char *)head)[i]);
+	for(i=1;i<len;i++) printf("%c , ", *head[i]);
 	printf("\n");
 }
