@@ -1,32 +1,33 @@
 #include <stdio.h>
 
-#define NOT_CTR 0;
-#define EMPTY_CTR 1;
-#define PLUS_CTR 2;
+#define NOT_CTR 0
+#define EMPTY_CTR 1
+#define PLUS_CTR 2
 
 #define NUL '\0'
 
-char ** do_args( int argc, char **argv, char *control, 
+char ** do_args( int argc, char  **argv, char *control, 
 void (*do_arg)( int ch, char * value ),
 void (*illegal_arg)( int ch ) );
 int whats_ctr(char c,char *control);
+//test
+void do_arg(int ch,char *value);
+void illegal_arg(int ch);
 
-
-int main(int argc, char const *argv[])
+int main(int argc, char  *argv[])
 {
-	char arg[6]={'1','2','a','b','c','f'};
-	char *ctr="abc+def+";
+	
+	char *control="x+y+z+";
 	int i;
-	for(i=0;i<6;i++){
-		int rst= whats_ctr(arg[i],ctr);
-		printf("%d\n",rst);
+	for(i=1;i<argc;i++){
+		do_args(argc,argv,control,do_arg,illegal_arg);
 	}
 	return 0;
 }
 
 //argv[istr][ichar]
 
-char ** do_args( int argc, char **argv, char *control, 
+char ** do_args( int argc, char  **argv, char *control, 
 void (*do_arg)( int ch, char * value ),
 void (*illegal_arg)( int ch ) )
 {
@@ -34,37 +35,43 @@ void (*illegal_arg)( int ch ) )
 
 	while(istr<argc){
 		char *str=argv[istr];
+
 		while(*str!=NUL){
-			if(**str=='-'){
-				switch( whats_ctr(*(str+1)) ){
-					case NOT_CTR: 
-						illegal_arg( *(str+1) );
-						return argv[istr+1]; //return next str
-					case EMPTY_CTR:
-						do_arg( *(str+1),NULL);
-						break;
-					case PLUS_CTR:
-						if(*(str+2)==NUL){
-							if(istr>=argc){
-								illegal_arg( *(str+1) );
-								return argv[istr+1]; //return next str
-							}else{
-								istr+=1;
-								do_arg( *(str+1), argv[istr]);
-								//!!need to jump to out loop
-							}
+			if(str[0]=='-'){
+				int ctr_type=whats_ctr(*(str+1), control);
+				if(ctr_type==NOT_CTR){
+					illegal_arg( *(str+1) );
+					return &argv[istr+1]; //return next str
+				}else if(ctr_type==EMPTY_CTR){
+					do_arg( *(str+1),NULL);
+					str+=2;
+				}else if(ctr_type==PLUS_CTR){
+					if(*(str+2)==NUL){
+						if(istr>=argc){
+							illegal_arg( *(str+1) );
+							return &argv[istr+1]; //return next str
 						}else{
-							do_arg( *(str+1), *(str+2));
-							//!!need to jump to out loop
+							//have a argument
+							istr+=1;
+							do_arg( *(str+1), argv[istr]);
+							istr+=1;
+							break; //go to next str
 						}
-					break;
+					}else{
+						do_arg( *(str+1), (str+2));
+						str+=3;
+						break;
+					}
 				}
+			}else{
+				return &argv[istr+1];
 			}
-			str+=1;
 		}
+
+		istr+=1;
 	}
 		
-	return argv[istr+1]; //return next str
+	return &argv[istr+1]; //return next str
 }
 
 /**
@@ -83,4 +90,15 @@ int whats_ctr(char c,char *control)
 		control+=1;
 	}
 	return NOT_CTR;
+}
+
+
+//test
+
+void do_arg(int ch,char *value){
+	printf("ch=%c, value=%s\n",(char)ch,value);
+}
+
+void illegal_arg(int ch){
+	printf("illegal_arg =%c\n",ch );
 }
