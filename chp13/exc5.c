@@ -1,4 +1,4 @@
-/**
+ /**
 *TO FIX: argument stop before -
 */
 #include <stdio.h>
@@ -23,9 +23,7 @@ int main(int argc, char  *argv[])
 	
 	char *control="x+y+z+abc";
 	int i;
-	for(i=1;i<argc;i++){
-		do_args(argc,argv,control,do_arg,illegal_arg);
-	}
+	do_args(argc,argv,control,do_arg,illegal_arg);
 	return 0;
 }
 
@@ -34,8 +32,41 @@ char ** do_args( int argc, char  **argv, char *control,
 void (*do_arg)( int ch, char * value ),
 void (*illegal_arg)( int ch ) )
 {
-	
-	return argv;
+	int istr=1;
+	 while(istr<argc){
+		char *str=argv[istr];
+
+		while( *str=='-'){
+			int ctr_type=whats_ctr(*(str+1), control);
+			if(ctr_type==NOT_CTR){
+				illegal_arg( *(str+1) );
+				return &argv[istr+1]; //return next str
+			}else if(ctr_type==EMPTY_CTR){
+				do_arg( *(str+1),NULL);
+				str+=2;
+			}else if(ctr_type==PLUS_CTR){
+				if(*(str+2)==NUL){
+					if(istr>=argc){
+						illegal_arg( *(str+1) );
+						return &argv[istr+1]; //return next str
+					}else{
+						//have a argument
+						istr+=1;
+						do_arg( *(str+1), argv[istr]);
+						istr+=1;
+						break; //go to next str
+					}
+				}else{
+					do_arg( *(str+1), (str+2));
+					str+=3;
+					break;
+				}
+			}
+		}
+	 	istr+=1;
+		if(str!=NUL) break; //break if not the end of string and not '-''
+	 }	
+	return &argv[istr+1]; //return next str
 }
 
 /**
